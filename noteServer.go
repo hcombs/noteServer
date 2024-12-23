@@ -4,7 +4,14 @@ import (
 	"fmt"
 	"os"
 	"net/http"
+	"encoding/json"
+	"io/ioutil"
 )
+
+type Update struct {
+	Filename	string `json:"filename"`
+	Content		string `json:"content"`
+} 
 
 func read(fname string)(data []byte,err error){
 	data, err = os.ReadFile(fname)
@@ -21,6 +28,29 @@ func getFile(w http.ResponseWriter, r *http.Request){
 }
 
 func updateFile(w http.ResponseWriter, r *http.Request){
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println("Error reading body in update file:",err)
+		return
+	}
+
+	bodyString := string(body)
+	fmt.Println(bodyString)
+	s := Update{}
+	err = json.Unmarshal(body, &s)
+
+	if err != nil {
+		fmt.Println("Error unmarshling json in update file", err)
+		return
+	}
+
+	fmt.Println(s)
+
+	err = os.WriteFile(s.Filename, []byte(s.Content), 0644)
+	if err != nil {
+		fmt.Println("Error writing to file:",err)
+		return
+	}
 
 }
 
