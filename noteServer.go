@@ -52,10 +52,38 @@ func updateFile(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
+	w.WriteHeader(200)
+	w.Write([]byte("{'update':'ran'}"))
 }
 
 func deleteFile(w http.ResponseWriter, r *http.Request){
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println("Error reading body in update file:",err)
+		return
+	}
 
+	bodyString := string(body)
+	fmt.Println(bodyString)
+	s := Update{}
+	err = json.Unmarshal(body, &s)
+
+	if err != nil {
+		fmt.Println("Error unmarshling json in update file", err)
+		return
+	}
+
+	fmt.Println(s)
+	err = os.Remove(s.Filename)
+	
+	if err != nil {
+		fmt.Println("Error deleting file:",err)
+		return
+	}
+
+
+	w.WriteHeader(200)
+	w.Write([]byte("{'delete':'ran'}"))
 }
 
 func main() {

@@ -12,28 +12,36 @@ const updateFile = async (fileObject) => {
 		},
 		body:JSON.stringify(fileObject)
 	});
-	const json = await response.json();
-	return json;
+	//const json = await response.json();
+	//return json;
+	return;
 }
 
 
 const deleteFile = async (fileObject) => {
-	const response = await fetch(window.location.href + "/deleteFile/", {
+	const response = await fetch(window.location.href + "deleteFile/", {
+		method:'post',
+		headers:{
+			'Content-Type': 'application/json'
+		},
 		body:JSON.stringify(fileObject)
 	});
-	const json = await response.json();
-	return json;
+	//const json = await response.json();
+	//return json;
+	return
 }
 
 const test = async ()=> {
 
-	console.log(await getFile("example.json"));
-
 	const fileObject = {
-		'filename':'example.json',
-		'content':'blah'
+		'filename':'test.json',
+		'content':JSON.stringify({
+			'method':'updateTest',
+			'array':['1',2,3]
+		})
 	}
 
-	console.log(await updateFile(fileObject));	
-	//console.log(await deleteFile(fileObject));	
+	await updateFile(fileObject);	
+	console.log(await getFile("test.json"));
+	await deleteFile(fileObject);	
 }
