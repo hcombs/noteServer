@@ -13,6 +13,10 @@ type Update struct {
 	Content		string `json:"content"`
 } 
 
+type Response struct {
+	Message string `json:"message"`
+
+}
 func read(fname string)(data []byte,err error){
 	data, err = os.ReadFile(fname)
 	return
@@ -26,6 +30,7 @@ func getFile(w http.ResponseWriter, r *http.Request){
 		w.Write(data)
 	}
 }
+
 
 func updateFile(w http.ResponseWriter, r *http.Request){
 	body, err := ioutil.ReadAll(r.Body)
@@ -52,8 +57,16 @@ func updateFile(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
+	response := Response{Message: "Update completed for " + s.Filename}
+	jsonResponse, err := json.Marshal(response)
+	if err != nil {
+		fmt.Println("Error formatting response", err)
+	}
+
+
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
-	w.Write([]byte("{'update':'ran'}"))
+	w.Write(jsonResponse)
 }
 
 func deleteFile(w http.ResponseWriter, r *http.Request){
@@ -81,10 +94,19 @@ func deleteFile(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
+	response := Response{Message: "Delete completed for " + s.Filename}
+	jsonResponse, err := json.Marshal(response)
+	if err != nil {
+		fmt.Println("Error formatting response", err)
+	}
 
+
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
-	w.Write([]byte("{'delete':'ran'}"))
+	w.Write(jsonResponse)
 }
+
+func errorHandler (){ }
 
 func main() {
 	http.HandleFunc("/getFile/", getFile)

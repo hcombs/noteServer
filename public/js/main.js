@@ -12,9 +12,8 @@ const updateFile = async (fileObject) => {
 		},
 		body:JSON.stringify(fileObject)
 	});
-	//const json = await response.json();
-	//return json;
-	return;
+	const json = await response.json();
+	return json;
 }
 
 
@@ -26,9 +25,8 @@ const deleteFile = async (fileObject) => {
 		},
 		body:JSON.stringify(fileObject)
 	});
-	//const json = await response.json();
-	//return json;
-	return
+	const json = await response.json();
+	return json;
 }
 
 const test = async ()=> {
@@ -41,7 +39,7 @@ const test = async ()=> {
 		})
 	}
 
-	await updateFile(fileObject);	
+	console.log(await updateFile(fileObject));	
 	console.log(await getFile("test.json"));
-	await deleteFile(fileObject);	
+	console.log(await deleteFile(fileObject));	
 }
