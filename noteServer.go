@@ -18,13 +18,13 @@ type Response struct {
 
 }
 func read(fname string)(data []byte,err error){
-	data, err = os.ReadFile(fname)
+	data, err = os.ReadFile("notes/"+fname)
 	return
 }
 
 func getFile(w http.ResponseWriter, r *http.Request){
 	fname := r.URL.Path[len("/getFile/"):]
-	data, err := os.ReadFile(fname)
+	data, err := os.ReadFile("notes/"+fname)
 	if err == nil {
 		w.WriteHeader(200)
 		w.Write(data)
@@ -51,7 +51,7 @@ func updateFile(w http.ResponseWriter, r *http.Request){
 
 	fmt.Println(s)
 
-	err = os.WriteFile(s.Filename, []byte(s.Content), 0644)
+	err = os.WriteFile("notes/"+s.Filename, []byte(s.Content), 0644)
 	if err != nil {
 		fmt.Println("Error writing to file:",err)
 		return
@@ -87,7 +87,7 @@ func deleteFile(w http.ResponseWriter, r *http.Request){
 	}
 
 	fmt.Println(s)
-	err = os.Remove(s.Filename)
+	err = os.Remove("notes/"+s.Filename)
 	
 	if err != nil {
 		fmt.Println("Error deleting file:",err)
