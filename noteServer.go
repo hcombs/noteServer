@@ -22,6 +22,17 @@ func read(fname string)(data []byte,err error){
 	return
 }
 
+
+func getFileList (w http.ResponseWriter, r *http.Request){ 
+	dir, err := os.Open("notes/")
+	if err != nil {
+		fmt.Println("flie list error", err)
+	}
+
+	names, err := dir.Readdirnames(-1)
+
+}
+
 func getFile(w http.ResponseWriter, r *http.Request){
 	fname := r.URL.Path[len("/getFile/"):]
 	data, err := os.ReadFile("notes/"+fname)
