@@ -1,5 +1,11 @@
 const getFile = async (filename) => {
-	const response =  await fetch(window.location.href + "getFile/"+filename)	
+	const response =  await fetch(window.location.href + "getFile/"+filename);	
+	const json = await response.json();
+	return json;
+};
+
+const getList = async () => {
+	const response =  await fetch(window.location.href +"getNotes/" );	
 	const json = await response.json();
 	return json;
 };
@@ -42,4 +48,5 @@ const test = async ()=> {
 	console.log(await updateFile(fileObject));	
 	console.log(await getFile("test.json"));
 	console.log(await deleteFile(fileObject));	
+	console.log(await getList());
 }

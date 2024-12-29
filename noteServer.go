@@ -15,22 +15,27 @@ type Update struct {
 
 type Response struct {
 	Message string `json:"message"`
-
 }
+
+type Filelist struct{
+	List []string `json:"list"`
+}
+
 func read(fname string)(data []byte,err error){
 	data, err = os.ReadFile("notes/"+fname)
 	return
 }
 
 
-func getFileList (w http.ResponseWriter, r *http.Request){ 
-	dir, err := os.Open("notes/")
+func getFileList (folder string)(names []string){ 
+	dir, err := os.Open(folder)
 	if err != nil {
 		fmt.Println("flie list error", err)
 	}
 
-	names, err := dir.Readdirnames(-1)
+	names, err = dir.Readdirnames(-1)
 
+	return names
 }
 
 func getFile(w http.ResponseWriter, r *http.Request){
@@ -116,10 +121,21 @@ func deleteFile(w http.ResponseWriter, r *http.Request){
 	w.WriteHeader(200)
 	w.Write(jsonResponse)
 }
+func getNotes(w http.ResponseWriter, r *http.Request){
+	filelist := getFileList("notes/")
+	response := Filelist{List:filelist}
+	jsonResponse, err := json.Marshal(response)
+	if err == nil {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(200)
+		w.Write(jsonResponse)
+	}
+}
 
 func errorHandler (){ }
 
 func main() {
+	http.HandleFunc("/getNotes/",getNotes)
 	http.HandleFunc("/getFile/", getFile)
 	http.HandleFunc("/updateFile/", updateFile)
 	http.HandleFunc("/deleteFile/", deleteFile) 
