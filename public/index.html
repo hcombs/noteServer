@@ -5,12 +5,16 @@
 	</head>
 
 	<body>
-		<h1 contenteditable="true" id="title">Title</h1>	
-		<div contenteditable="true" id="content" class="noteBody"></div>
+		<div id="editNoteContainer">
+			<div contenteditable="true" id="title" class="title">Title</div>	
+			<div id="controls" class="controls">
+				<input type="button" id="save" value="save" />
+				<input type="button" id="delete" value="delete"/>
+			</div>
+
+			<div contenteditable="true" id="content" class="noteBody"></div>
+			<div id="popup"></div>
+		</div>
 		<script type="text/javascript" src="js/main.js"></script>
-	
 	</body>
-
-
-
 </html>

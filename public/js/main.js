@@ -50,3 +50,23 @@ const test = async ()=> {
 	console.log(await deleteFile(fileObject));	
 	console.log(await getList());
 }
+
+
+const editNote = ()=>{ 
+	const initializeEdit = ()=>{ }
+	const closeEdit = ()=>{ }
+	const saveNote = ()=>{ }
+	const deleteNote = ()=>{ }
+
+	return{
+		initializeEdit,
+		closeEdit,
+		saveNote,
+		deleteNote
+	};	
+}();
+window.onload = ()=>{
+
+	document.querySelector("#save").onclick = editNote.saveNote
+	document.querySelector("#delete").onclick = editNote.deleteNote
+}
