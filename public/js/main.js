@@ -52,10 +52,16 @@ const test = async ()=> {
 }
 
 
-const editNote = ()=>{ 
-	const initializeEdit = ()=>{ }
+const editNote = (()=>{ 
+
+	
+	const initializeEdit = ()=>{ 
+
+	}
 	const closeEdit = ()=>{ }
-	const saveNote = ()=>{ }
+	const saveNote = ()=>{ 
+		console.log('save implimentation');
+	}
 	const deleteNote = ()=>{ }
 
 	return{
@@ -64,7 +70,7 @@ const editNote = ()=>{
 		saveNote,
 		deleteNote
 	};	
-}();
+})();
 window.onload = ()=>{
 
 	document.querySelector("#save").onclick = editNote.saveNote
