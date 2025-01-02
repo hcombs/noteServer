@@ -54,14 +54,20 @@ const test = async ()=> {
 
 const editNote = (()=>{ 
 
-	
-	const initializeEdit = ()=>{ 
+	const initializeEdit = (initial)=>{ 
+		document.querySelector("#title").innerHTML = initial.title;
+		document.querySelector("#content").innerHTML = initial.content;
+	};
 
-	}
-	const closeEdit = ()=>{ }
+	const closeEdit = ()=>{ 
+		document.querySelector("#title").innerHTML = "";
+		document.querySelector("#content").innerHTML = "";
+	};
+
 	const saveNote = ()=>{ 
 		console.log('save implimentation');
-	}
+	};
+
 	const deleteNote = ()=>{ }
 
 	return{
@@ -71,6 +77,19 @@ const editNote = (()=>{
 		deleteNote
 	};	
 })();
+
+
+const testEditor = ()=>{ 
+	editNote.initializeEdit({
+		title:"edit note",
+		content:"This note is a test of the note initializer",
+		filename:""
+	});
+
+	editNote.closeEdit();
+
+}
+
 window.onload = ()=>{
 
 	document.querySelector("#save").onclick = editNote.saveNote
