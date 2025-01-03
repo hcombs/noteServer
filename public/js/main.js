@@ -53,22 +53,38 @@ const test = async ()=> {
 
 
 const editNote = (()=>{ 
+	var file;
 
 	const initializeEdit = (initial)=>{ 
+		file = initial.filename;
 		document.querySelector("#title").innerHTML = initial.title;
-		document.querySelector("#content").innerHTML = initial.content;
+		document.querySelector("#content").innerHTML = initial.note;
 	};
 
 	const closeEdit = ()=>{ 
+		file = "";
 		document.querySelector("#title").innerHTML = "";
 		document.querySelector("#content").innerHTML = "";
 	};
 
 	const saveNote = ()=>{ 
-		console.log('save implimentation');
+		(async ()=>{
+			await updateFile({
+				filename:file,
+				content:JSON.stringify({
+					title:document.querySelector("#title").innerHTML,
+					note:document.querySelector("#content").innerHTML
+				})
+			});
+		})();
+
 	};
 
-	const deleteNote = ()=>{ }
+	const deleteNote = ()=>{ 
+		if(window.confirm(`Are you sure you want to delete ${file}?`)){
+			(async ()=>{ await deleteFile({filename:file, content:''}); })();
+		}
+	};
 
 	return{
 		initializeEdit,
@@ -79,19 +95,7 @@ const editNote = (()=>{
 })();
 
 
-const testEditor = ()=>{ 
-	editNote.initializeEdit({
-		title:"edit note",
-		content:"This note is a test of the note initializer",
-		filename:""
-	});
-
-	editNote.closeEdit();
-
-}
-
 window.onload = ()=>{
-
 	document.querySelector("#save").onclick = editNote.saveNote
 	document.querySelector("#delete").onclick = editNote.deleteNote
 }
