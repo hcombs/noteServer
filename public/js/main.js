@@ -95,7 +95,16 @@ const editNote = (()=>{
 })();
 
 
+const interfaceSwap = ()=>{ 
+	
+	document.querySelector("#listingContainer").className = document.querySelector("#listingContainer").className === "hide" ? "show":"hide";
+	document.querySelector("#editNoteContainer").className = document.querySelector("#editNoteContainer").className === "hide" ? "show":"hide";
+};
+
+
 window.onload = ()=>{
-	document.querySelector("#save").onclick = editNote.saveNote
-	document.querySelector("#delete").onclick = editNote.deleteNote
+
+	document.querySelector("#newNote").onclick = interfaceSwap;
+	document.querySelector("#save").onclick = editNote.saveNote;
+	document.querySelector("#delete").onclick = editNote.deleteNote;
 }

@@ -24,3 +24,9 @@ body {
 .noteBody:read-write:focus{
 	outline:none;
 }
+.hide{
+	display:none;
+}
+.show{
+	display:block;
+}

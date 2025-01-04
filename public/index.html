@@ -5,11 +5,16 @@
 	</head>
 
 	<body>
-		<div id="editNoteContainer">
+
+		<div id="listingContainer" class="show">
+			<input type="button" id="newNote" value="new note" />
+		</div>
+
+		<div id="editNoteContainer" class="hide">
 			<div contenteditable="true" id="title" class="title">Title</div>	
 			<div id="controls" class="controls">
 				<input type="button" id="save" value="save" />
-				<input type="button" id="delete" value="delete"/>
+				<input type="button" id="delete" value="delete" />
 			</div>
 
 			<div contenteditable="true" id="content" class="noteBody"></div>
