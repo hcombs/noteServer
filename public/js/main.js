@@ -53,7 +53,7 @@ const test = async ()=> {
 
 
 const editNote = (()=>{ 
-	var file;
+	var file = "";
 
 	const initializeEdit = (initial)=>{ 
 		file = initial.filename;
@@ -67,17 +67,23 @@ const editNote = (()=>{
 		document.querySelector("#content").innerHTML = "";
 	};
 
-	const saveNote = ()=>{ 
+	const saveNote = ()=>{
+		let noteTitle = document.querySelector("#title").innerHTML; 
+		if(noteTitle + ".json" !== file){
+			if(file !== ""){
+				(async ()=>{ await deleteFile({filename:file, content:''}); })();
+			}
+			file = noteTitle +".json"
+		}
 		(async ()=>{
 			await updateFile({
 				filename:file,
 				content:JSON.stringify({
-					title:document.querySelector("#title").innerHTML,
+					title:noteTitle,
 					note:document.querySelector("#content").innerHTML
 				})
 			});
 		})();
-
 	};
 
 	const deleteNote = ()=>{ 
@@ -96,9 +102,13 @@ const editNote = (()=>{
 
 
 const interfaceSwap = ()=>{ 
-	
 	document.querySelector("#listingContainer").className = document.querySelector("#listingContainer").className === "hide" ? "show":"hide";
 	document.querySelector("#editNoteContainer").className = document.querySelector("#editNoteContainer").className === "hide" ? "show":"hide";
+	editNote.initializeEdit({
+		filename:"",
+		title:"",
+		note:""
+	})
 };
 
 
