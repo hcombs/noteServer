@@ -119,4 +119,5 @@ window.onload = async () =>{
 	document.querySelector("#newNote").onclick = interfaceSwap;
 	document.querySelector("#save").onclick = editNote.saveNote;
 	document.querySelector("#delete").onclick = editNote.deleteNote;
+	document.querySelector("#cancel").onclick = interfaceSwap;
 }
