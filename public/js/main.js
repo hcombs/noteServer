@@ -35,23 +35,6 @@ const deleteFile = async (fileObject) => {
 	return json;
 }
 
-const test = async ()=> {
-
-	const fileObject = {
-		'filename':'test.json',
-		'content':JSON.stringify({
-			'method':'updateTest',
-			'array':['1',2,3]
-		})
-	}
-
-	console.log(await updateFile(fileObject));	
-	console.log(await getFile("test.json"));
-	console.log(await deleteFile(fileObject));	
-	console.log(await getList());
-}
-
-
 const editNote = (()=>{ 
 	var file = "";
 
@@ -111,9 +94,28 @@ const interfaceSwap = ()=>{
 	})
 };
 
+const addTile = (name) => {
+	let div = document.createElement('div');
+	div.setAttribute('filename',name);
+	div.onclick = async (e) =>{
+		let content = await getFile(e.target.getAttribute('filename'));
+		interfaceSwap();
+		content.filename = e.target.getAttribute('filename');
+		editNote.initializeEdit(content);
+	};
+	name = name.split('.json').join('');
+	div.innerHTML = name;
+	document.querySelector('#noteListing').appendChild(div);
+}
 
-window.onload = ()=>{
+const init = async ()=> {
+	document.querySelector('#noteListing').innerHTML = '';
+	let list = await getList();
+	list.list.map(addTile);
+};
 
+window.onload = async () =>{
+	await init();
 	document.querySelector("#newNote").onclick = interfaceSwap;
 	document.querySelector("#save").onclick = editNote.saveNote;
 	document.querySelector("#delete").onclick = editNote.deleteNote;
