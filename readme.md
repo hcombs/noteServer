@@ -1,3 +1,3 @@
 # Todo
 
-- Add cancel functionality for notes
+- Make new note button a plus sign with a circular button

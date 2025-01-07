@@ -5,6 +5,18 @@ body {
 	height:100%;
 	margin:0;
 }
+#newNote{
+	position:absolute;
+	right:3%;
+	bottom:3%;
+}
+
+#noteListing{
+	font-size:36px;
+	margin-left:25px;
+	padding:5px;
+}
+
 .title{
 	display:inline-block;
 	width:49%;
