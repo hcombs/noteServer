@@ -9,6 +9,9 @@ body {
 	position:absolute;
 	right:3%;
 	bottom:3%;
+	border-radius:50%;
+	width:150px;
+	height:150px;
 }
 
 #noteListing{
