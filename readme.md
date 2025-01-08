@@ -1,3 +1,4 @@
 # Todo
 
-- Make new note button a plus sign with a circular button
+- Make a plus sign for the new note button
+- Find a new font for the notes

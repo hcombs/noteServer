@@ -140,6 +140,6 @@ func main() {
 	http.HandleFunc("/updateFile/", updateFile)
 	http.HandleFunc("/deleteFile/", deleteFile) 
 	http.Handle("/", http.FileServer(http.Dir("public/")))
-	fmt.Println("Server listening on port 8080")
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("Server listening on port 8081")
+	http.ListenAndServe(":8081", nil)
 }
