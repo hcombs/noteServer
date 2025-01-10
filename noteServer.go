@@ -135,6 +135,10 @@ func getNotes(w http.ResponseWriter, r *http.Request){
 func errorHandler (){ }
 
 func main() {
+	err := os.Mkdir("notes",0755)
+	if err != nil{
+		fmt.Println("Note directory exists")
+	}
 	http.HandleFunc("/getNotes/",getNotes)
 	http.HandleFunc("/getFile/", getFile)
 	http.HandleFunc("/updateFile/", updateFile)
