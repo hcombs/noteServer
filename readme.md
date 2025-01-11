@@ -1,4 +1,4 @@
 # Todo
 
-- Make a plus sign for the new note button
+- Dockerize the noteserver
 - Find a new font for the notes
