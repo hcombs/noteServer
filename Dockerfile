@@ -1,20 +1,14 @@
-FROM golang:latest as build
+FROM golang:latest
 
 WORKDIR /app
 
-COPY go.mod .
-COPY go.sum .
+COPY go.mod ./
 
 run go mod download
 
-COPY ..
+COPY . .
 
-RUN go build -o /myapp ./cmd/web
+RUN go build -o main . 
 
-FROM alpine:latest as run
-
-COPY --from=build /myapp /myapp
-
-WORKDIR /app
 EXPOSE 8081
-CMD ["/myapp"]
+CMD ["./main"]
