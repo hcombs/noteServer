@@ -2,6 +2,8 @@ FROM golang:latest
 
 WORKDIR /app
 
+VOLUME /app/notes
+
 COPY go.mod ./
 
 run go mod download

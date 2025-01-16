@@ -117,7 +117,13 @@ const init = async ()=> {
 window.onload = async () =>{
 	await init();
 	document.querySelector("#newNote").onclick = interfaceSwap;
-	document.querySelector("#save").onclick = editNote.saveNote;
-	document.querySelector("#delete").onclick = editNote.deleteNote;
+	document.querySelector("#save").onclick = ()=>{
+		editNote.saveNote();
+		interfaceSwap();
+	};
+	document.querySelector("#delete").onclick = ()=>{
+		editNote.deleteNote();
+		interfaceSwap();
+	};
 	document.querySelector("#cancel").onclick = interfaceSwap;
 }
