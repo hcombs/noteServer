@@ -91,7 +91,8 @@ const interfaceSwap = ()=>{
 		filename:"",
 		title:"",
 		note:""
-	})
+	});
+	(async ()=> await init())();
 };
 
 const addTile = (name) => {
