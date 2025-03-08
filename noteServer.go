@@ -11,6 +11,7 @@ import (
 type Update struct {
 	Filename	string `json:"filename"`
 	Content		string `json:"content"`
+	Tag			string `json:"tag"`
 } 
 
 type Response struct {

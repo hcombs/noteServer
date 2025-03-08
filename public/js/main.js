@@ -52,18 +52,20 @@ const editNote = (()=>{
 
 	const saveNote = ()=>{
 		let noteTitle = document.querySelector("#title").innerHTML; 
-		if(noteTitle + ".json" !== file){
+		let tagName = document.querySelector("#tag").innerHTML;
+		if(tagName+'~'+noteTitle + ".json" !== file){
 			if(file !== ""){
-				(async ()=>{ await deleteFile({filename:file, content:''}); })();
+				(async ()=>{ await deleteFile({filename:tagName+"~"+file, content:'',tag:''}); })();
 			}
 			file = noteTitle +".json"
 		}
 		(async ()=>{
 			await updateFile({
-				filename:file,
+				filename:tagName+"~"+file,
 				content:JSON.stringify({
 					title:noteTitle,
-					note:document.querySelector("#content").innerHTML
+					note:document.querySelector("#content").innerHTML,
+					tag:tagName
 				})
 			});
 		})();
@@ -71,7 +73,7 @@ const editNote = (()=>{
 
 	const deleteNote = ()=>{ 
 		if(window.confirm(`Are you sure you want to delete ${file}?`)){
-			(async ()=>{ await deleteFile({filename:file, content:''}); })();
+			(async ()=>{ await deleteFile({filename:file, content:'',tag:''}); })();
 		}
 	};
 
@@ -90,22 +92,32 @@ const interfaceSwap = ()=>{
 	editNote.initializeEdit({
 		filename:"",
 		title:"",
-		note:""
+		note:"",
+		tag:""
 	});
 	(async ()=> await init())();
 };
 
 const addTile = (name) => {
+	let tag = "";
+	let displayName = name;
+	if(name.indexOf('~') > -1){
+		tag = name.split('~')[0];
+		displayName = name.split('~')[1];
+	}
+
+	displayName = displayName.split('.json').join('');
 	let div = document.createElement('div');
 	div.setAttribute('filename',name);
+	div.setAttribute('tag',tag);
 	div.onclick = async (e) =>{
 		let content = await getFile(e.target.getAttribute('filename'));
 		interfaceSwap();
 		content.filename = e.target.getAttribute('filename');
+		content.tag = e.target.getAttribute('tag');
 		editNote.initializeEdit(content);
 	};
-	name = name.split('.json').join('');
-	div.innerHTML = name;
+	div.innerHTML = displayName;
 	document.querySelector('#noteListing').appendChild(div);
 }
 
