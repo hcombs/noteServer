@@ -1,3 +1,5 @@
+var fileList;
+
 const getFile = async (filename) => {
 	const response =  await fetch(window.location.href + "getFile/"+filename);	
 	const json = await response.json();
@@ -98,6 +100,16 @@ const interfaceSwap = ()=>{
 	(async ()=> await init())();
 };
 
+const getUniqueTags = (list)=>{
+	let tags = new Set(list.map(e =>{
+		if(e.indexOf('~') > -1){
+			return e.split('~')[0];
+		}
+		return 'No tag';
+	}));
+	return [...tags];
+};
+
 const addTile = (name) => {
 	let tag = "";
 	let displayName = name;
@@ -121,11 +133,32 @@ const addTile = (name) => {
 	document.querySelector('#noteListing').appendChild(div);
 }
 
+const displayTags = (tag) => {
+	let div = document.createElement('div');
+	div.setAttribute('tag',tag);
+	div.onclick = (e) =>{
+		let key = e.target.getAttribute('tag');
+		let files = fileList.filter(e=> e.indexOf(tag) > -1);
+		if(key == 'No tag'){
+			files = fileList.filter(e=>e.indexOf('~') < 0);
+		}
+		document.querySelector('#noteListing').innerHTML = '';
+		files.map(addTile);
+	}
+	div.innerHTML = tag;
+	document.querySelector('#noteListing').appendChild(div);
+}
+
+
 const init = async ()=> {
 	document.querySelector('#noteListing').innerHTML = '';
 	let list = await getList();
-	list.list.map(addTile);
+	let tags = getUniqueTags(list.list);
+	fileList = list.list;
+	tags.map(displayTags);
 };
+
+
 
 window.onload = async () =>{
 	await init();
