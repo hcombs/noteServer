@@ -43,6 +43,7 @@ const editNote = (()=>{
 	const initializeEdit = (initial)=>{ 
 		file = initial.filename;
 		document.querySelector("#title").innerHTML = initial.title;
+		document.querySelector("#tag").innerHTML = initial.tag;
 		document.querySelector("#content").innerHTML = initial.note;
 	};
 
@@ -57,13 +58,13 @@ const editNote = (()=>{
 		let tagName = document.querySelector("#tag").innerHTML;
 		if(tagName+'~'+noteTitle + ".json" !== file){
 			if(file !== ""){
-				(async ()=>{ await deleteFile({filename:tagName+"~"+file, content:'',tag:''}); })();
+				(async ()=>{ await deleteFile({filename:file, content:'',tag:''}); })();
 			}
-			file = noteTitle +".json"
+			file = tagName+'~'+noteTitle +".json"
 		}
 		(async ()=>{
 			await updateFile({
-				filename:tagName+"~"+file,
+				filename:file,
 				content:JSON.stringify({
 					title:noteTitle,
 					note:document.querySelector("#content").innerHTML,
